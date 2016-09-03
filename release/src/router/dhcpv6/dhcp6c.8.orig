@@ -39,7 +39,6 @@
 .Op Fl c Ar configfile
 .Op Fl Ddfi
 .Op Fl p Ar pid-file
-.Op Fl P Ar profile
 .Ar interface
 .Op Ar interfaces...
 .\"
@@ -93,14 +92,6 @@ Use
 .Ar pid-file
 to dump the process ID of
 .Nm .
-.It Fl P Ar profile
-Use the given
-.Ar profile
-defined in the
-.Nm
-configuration file for
-.Ar interfaces
-which do not have a specific configuration.
 .El
 .Pp
 The program will daemonize itself on invocation unless the

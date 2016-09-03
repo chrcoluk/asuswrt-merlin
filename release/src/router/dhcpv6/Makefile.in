@@ -29,8 +29,6 @@
 # $KAME: Makefile.in,v 1.45 2005/10/16 16:25:38 suz Exp $
 #
 
-include ../common.mak
-
 prefix=	@prefix@
 srcdir=	@srcdir@
 sysconfdir= @sysconfdir@
@@ -57,17 +55,8 @@ mandir=	@mandir@
 
 GENSRCS=cfparse.c cftoken.c
 CLIENTOBJS=	dhcp6c.o common.o config.o prefixconf.o dhcp6c_ia.o timer.o \
-	dhcp6c_script.o if.o base64.o auth.o addrconf.o \
+	dhcp6c_script.o if.o base64.o auth.o dhcp6_ctl.o addrconf.o lease.o \
 	$(GENSRCS:%.c=%.o)
-ifeq ($(USE_DHCP6CTL),y)
-CLIENTOBJS+=	dhcp6_ctl.o
-CFLAGS+=	-DUSE_DHCP6CTL
-endif
-ifeq ($(USE_DHCP6SRV),y)
-CLIENTOBJS+=	lease.o
-CFLAGS+=	-DUSE_DHCP6SRV
-endif
-
 SERVOBJS=	dhcp6s.o common.o if.o config.o timer.o lease.o \
 	base64.o auth.o dhcp6_ctl.o $(GENSRCS:%.c=%.o)
 RELAYOBJS =	dhcp6relay.o dhcp6relay_script.o common.o timer.o
@@ -103,7 +92,7 @@ strlcpy.o:	$(srcdir)/missing/strlcpy.c
 arc4random.o:	$(srcdir)/missing/arc4random.c
 	$(CC) $(CFLAGS) -c $(srcdir)/missing/$*.c
 getifaddrs.o:	$(srcdir)/missing/getifaddrs.c
-	$(CC) $(CFLAGS) -c $(srcdir)/missing/$*.c
+	$(CC) -c $(srcdir)/missing/$*.c
 daemon.o:	$(srcdir)/missing/daemon.c
 	$(CC) -c $(srcdir)/missing/$*.c
 warnx.o:	$(srcdir)/missing/warnx.c
